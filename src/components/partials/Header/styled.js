@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const HeaderArea = styled.div`
-   background-color: #FFF;
    height: 60px;
    border-bottom: 1px solid #CCC;
    .container{
@@ -49,10 +48,13 @@ export const HeaderArea = styled.div`
         margin-left: 20px;
         margin-right: 20px;
         
-        a {
+        a, button {
            color: #000;
            font-size: 14px;
-
+           border: 0;
+           background: none;
+           cursor: pointer;
+           outline: none;
            &:hover{
               color: #999;
            }

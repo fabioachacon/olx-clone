@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import NotFound from './pages/NotFound';
 import SignIn from './pages/Signin';
+import SignUp from './pages/Signup';
 
 const Routes = () => {
    return (
@@ -16,6 +17,9 @@ const Routes = () => {
          </Route>
          <Route exact path='/signin'>
            <SignIn />
+         </Route>
+         <Route exact path='/signup'>
+           <SignUp />
          </Route>
          <Route>
             <NotFound />
