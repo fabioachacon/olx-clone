@@ -5,6 +5,7 @@ import About from './pages/About';
 import NotFound from './pages/NotFound';
 import SignIn from './pages/Signin';
 import SignUp from './pages/Signup';
+import AdPage from './pages/AdPage';
 
 const Routes = () => {
    return (
@@ -20,6 +21,9 @@ const Routes = () => {
          </Route>
          <Route exact path='/signup'>
            <SignUp />
+         </Route>
+         <Route exact path="/ad/:id">
+           <AdPage />
          </Route>
          <Route>
             <NotFound />

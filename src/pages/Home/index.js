@@ -9,10 +9,12 @@ const Page = () => {
 
     const api = useAPI();
 
+    // States
     const [stateList, setStateList] = useState([]);
     const [categories, setCategories] = useState([]);
     const [adList, setAdList] = useState([]);
 
+    // Fetch list of registred states
     useEffect(() => {
       const getStates = async () => {
         const slist = await api.getStates();
@@ -21,6 +23,7 @@ const Page = () => {
       getStates();
     }, []);
 
+    // Fetch Categories
     useEffect(() => {
       const getCategories = async () => {
         const cats = await api.getCategories();
@@ -29,11 +32,12 @@ const Page = () => {
       getCategories()
     }, []);
 
+    //Fetch Recent Ads
     useEffect(() => {
       const getRecentAds = async () => {
         const json = await api.getAds({
           sort: 'desc',
-          limit: 4,
+          limit: 3,
 
         });
         setAdList(json.ads);
@@ -42,7 +46,7 @@ const Page = () => {
     }, [])
 
     return (
-      <>
+      <React.Fragment>
          <SearchArea>
            <PageContainer>
               <div className="searchBox">
@@ -79,7 +83,7 @@ const Page = () => {
              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, iure sit! Eos libero sint, inventore soluta omnis accusantium? Placeat animi voluptates pariatur atque fuga eveniet architecto cumque voluptatem, tempora autem.
           </PageArea>
         </PageContainer>
-      </>
+      </React.Fragment>
     );
 }
 
