@@ -43,7 +43,7 @@ const Page = () => {
         setAdList(json.ads);
       }
       getRecentAds();
-    }, [])
+    }, []);
 
     return (
       <React.Fragment>
@@ -52,7 +52,7 @@ const Page = () => {
               <div className="searchBox">
                 <form method="GET" action="/ads">
                   <input type="text" name='q' placeholder='search'/>
-                  <select name="" id="">
+                  <select name="state">
                     {stateList.map((item, key) => 
                        <option key={key} value={item.name}>{item.name}</option>
                      )}
