@@ -5,9 +5,11 @@ import { useLocation, useHistory } from 'react-router-dom';
 
 import { PageContainer } from '../../components/MainComponents';
 import AdItem from '../../components/partials/AdItem';
+
 const Page = () => {
     const api = useAPI();
     const history = useHistory();
+    let timer;
 
     const useQueryString = () => {
       return new URLSearchParams( useLocation().search );
@@ -15,14 +17,33 @@ const Page = () => {
 
     const query = useQueryString();
 
+    // States
     const [q, setQ] = useState( query.get('q') !== null ? query.get('q') : '' );
     const [cat, setCat] = useState( query.get('cat') !== null ? query.get('cat') : '' );
     const [state, setState] = useState( query.get('state') !== null ? query.get('state') : '' );
 
-    // States
+    const [adsTotal, setAdsTotal] = useState(0);
     const [stateList, setStateList] = useState([]);
     const [categories, setCategories] = useState([]);
     const [adList, setAdList] = useState([]);
+    
+    const [resultOpacity, setResultOpacity] = useState(1);
+    const [loading, setLoading] = useState(true);
+
+    const getAdsList = async () => {
+      setLoading(true)
+      const json = await api.getAds({
+        sort: 'desc',
+        limit: 9,
+        q,
+        cat,
+        state
+      });
+      setAdList(json.ads);
+      setAdsTotal(json.total);
+      setResultOpacity(1);
+      setLoading(false);
+    }
 
     useEffect(() => {
       const queryString = [];
@@ -42,6 +63,13 @@ const Page = () => {
       history.replace({
         search: `?${queryString.join('&')}`,
       });
+
+      if (timer) {
+        clearTimeout(timer);
+      }
+
+      timer = setTimeout(getAdsList, 2000);
+      setResultOpacity(0.3);
     },[q, cat, state])
 
     // Fetch list of registred states
@@ -60,19 +88,6 @@ const Page = () => {
         setCategories(cats);
       }
       getCategories()
-    }, []);
-
-    //Fetch Recent Ads
-    useEffect(() => {
-      const getRecentAds = async () => {
-        const json = await api.getAds({
-          sort: 'desc',
-          limit: 4,
-
-        });
-        setAdList(json.ads);
-      }
-      getRecentAds();
     }, []);
 
     return (
@@ -111,7 +126,16 @@ const Page = () => {
             </div>
             <div className="rightSide">
               <h2>Resultados</h2>
-              <div className="list">
+
+              {loading &&
+                <div className="listWarning">Carregando...</div>
+              }
+
+              {!loading && adList.length === 0  &&
+                <div className="listWarning">Não encontrados Resultados</div>
+              }
+              
+              <div className="list" style={{opacity: resultOpacity}}>
                 {adList.map((i, k) => 
                   <AdItem key={k} data={i}/>
                 )}
