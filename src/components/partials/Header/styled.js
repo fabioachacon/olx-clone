@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const HeaderArea = styled.div`
    height: 60px;
    border-bottom: 1px solid #CCC;
+   
    .container{
       max-width: 1000px;
       display: flex;
@@ -71,5 +72,30 @@ export const HeaderArea = styled.div`
          }
         }
       }
+   }
+
+   @media screen and (max-width: 600px) {
+     & {
+        height: auto;
+     }
+
+      .container {
+         flex-direction: column;
+      }
+
+      .logo {
+         justify-content: center;
+         margin: 10px 0;
+      }
+
+      nav ul {
+         flex-direction: column;
+      }
+
+      nav li {
+         margin: 2px 10px;
+      }
+
+
    }
 `;

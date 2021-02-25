@@ -5,7 +5,8 @@ import { FooterArea } from './styled';
 const Footer = () => {
     return(
         <FooterArea>
-          Footer
+          Todos os diretos reservados<br/>
+          &copy;OLX Clone 
         </FooterArea>
     )
 }
